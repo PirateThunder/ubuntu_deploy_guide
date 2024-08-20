@@ -1,0 +1,108 @@
+Install was easy. (Ubuntu Desktop 24.04 LTS)
+I add Russian language in Settings after install, Win+Space for changing input source (language) by default.
+Also I create bash script for updating apt and snap packages, then clearing cache files.
+
+Optional: Nvidia
+I have installed proprietary drivers during install, and NVIDIA drivers set on my machine. Then, I install CUDA:
+$ sudo apt install nvidia-cuda-toolkit
+Install some soft
+sudo apt install -y git vim curl net-tools htop
+sudo snap install code --classic
+sudo snap install chromium (default by firefox because it's support web better)
+sudo snap install postman
+
+All updates on machine
+I created bash script, then call it by alias in .bash_aliases:
+#!/bin/bash
+
+set -eu
+
+sudo apt update -y
+sudo apt full-upgrade -y
+sudo apt autoremove -y
+sudo apt clean -y
+sudo apt autoclean -y
+
+sudo snap refresh
+sudo snap list --all | awk '/disabled/{print $1, $3}' |
+	    while read snapname revision; do
+		sudo snap remove "$snapname" --revision="$revision"
+	    done
+sudo systemctl daemon-reload
+
+alias:
+alias u="~/ubuntu_update_all.sh"
+
+VPN
+I use Outline. Download client with format .AppImage, then:
+$ chmod +x ./Outline...
+Move it to ~, and add new alias:
+alias v="~/Outline-Client.AppImage --no-sandbox > /dev/null 2>&1 &"
+& - start in background
+> /dev/null 2>&1 - not showing all logs after launch
+
+JS stuff
+NVM (Node.js)
+Going to: https://github.com/nvm-sh/nvm
+Check last version
+run:
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/vX.XX.X/install.sh | bash
+, where X.XX.X - last version
+then install LTS:
+$ nvm install --lts
+
+pnpm install:
+going to https://pnpm.io/installation ; then do
+$ curl -fsSL https://get.pnpm.io/install.sh | sh -
+create alias
+alias pnpx="pnpm dlx"
+
+Python stuff
+Poetry
+Going to https://python-poetry.org/docs/#installing-with-the-official-installer
+then type
+$ curl -sSL https://install.python-poetry.org | python3 -
+but this not work on ubuntu24.04. On this reason firstly I install pipx, then install poetry through pipx.
+pyenv
+Follow guide on https://www.dedicatedcore.com/blog/install-pyenv-ubuntu/
+
+Visual Code
+make alias in .bash_aliases
+alias c="code . && exit"
+first launch: select Tomorrow Night Blue theme
+install these extensions:
+ES7+ React/Redux/React-Native
+Tailwind CSS IntelliSense
+JavaScript and TypeScript Nightly
+Prisma
+Docker
+Dev Containers
+Markdown All in One
+Material Icon Theme
+
+
+restart ts server: Ctrl + Shift + P > start entering 'restart' > Restart TS Server (do this when don't see true imports, etc.) but better install typescript and javascript language features extension (https://stackoverflow.com/questions/64454845/where-is-vscodes-restart-ts-server)
+
+Install docker
+https://docs.docker.com/engine/install/ubuntu/ : Install using the convenience script
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo sh get-docker.sh
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+$ newgrp docker
+Docker compose:
+sudo apt update
+sudo apt install docker-compose-plugin
+docker compose version
+
+MongoDB
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-community-with-docker/
+https://www.mongodb.com/docs/compass/current/install/
+
+PGAdmin
+https://hub.docker.com/_/postgres
+https://www.pgadmin.org/download/pgadmin-4-apt/
+
+KeePass2
+sudo apt update
+sudo apt install keepass2
