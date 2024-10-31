@@ -106,3 +106,12 @@ https://www.pgadmin.org/download/pgadmin-4-apt/
 KeePass2
 sudo apt update
 sudo apt install keepass2
+
+xclip tutorial: https://stackoverflow.com/questions/5130968/how-can-i-copy-the-output-of-a-command-directly-into-my-clipboard
+One way of doing it follows:
+Install xclip, such as:
+$ sudo apt-get install xclip
+Pipe the output into xclip to be copied into the clipboard:
+$ cat file | xclip
+Paste the text you just copied into a X application:
+$ xclip -o
