@@ -74,6 +74,7 @@ install these extensions:
 ES7+ React/Redux/React-Native
 Tailwind CSS IntelliSense
 JavaScript and TypeScript Nightly
+Thunder Client
 Prisma
 Docker
 Dev Containers
